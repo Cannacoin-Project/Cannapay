@@ -1,0 +1,40 @@
+extends layout
+block header
+
+block content
+	center
+	div(class="container") 
+		include header 
+		table(align="center")
+			th(align="left") 	
+				font(size="6" class='changeColor') Open Trades			
+			tr
+				td(class='panel' style='width:800px;')
+		center
+			#orderInfo(class='table')
+				table(style='width:800px;')
+					div(style='width:75%;')
+						h2(align='left') Buy/Sell Trades
+					thead
+						th Market
+						th Type
+						th Limit
+						th Quantity
+						th Timestamp
+						th Cancel
+					tbody
+			
+			#ladderInfo(class='table')
+				table(style='width:800px;')
+					div(style='width:75%;')
+						h2(align='left') Active Padding Orders
+					thead
+						th Market
+						th Type
+						th Start
+						th Stop
+						th Spread
+						th Quantity
+						th Cancel
+					tbody
+	script(src='/javascripts/tradefunctions.js')

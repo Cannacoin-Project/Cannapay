@@ -1,0 +1,25 @@
+block content
+	html
+		head
+			
+			title CannaPay | Login
+
+			link(rel='stylesheet', href='/stylesheets/style.css', class='template')
+			link(rel='stylesheet', href='/stylesheets/vendor/animate.css')
+			link(rel='stylesheet', href='/stylesheets/vendor/alertify.core.css')
+			link(rel='stylesheet', href='/stylesheets/vendor/alertify.default.css')
+
+			script(src='/javascripts/vendor/socket.io-1.0.6.js')
+		body
+		div(class="container" style="height: 100%;")
+			center
+				div(class='exchange' style='width: 400px; height: 250x; border-radius: 12.5px;')
+					table(align="center")
+						th(align="")
+							img(src='/images/cannapay.png')
+							h3 Configuring and setting up... we'll be back shortly.
+							p(class='animated flash error')= message
+						
+		include footer.jade
+	script(src='/javascripts/vendor/alertify.min.js')
+	script(src='/javascripts/socket.js')

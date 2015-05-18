@@ -1,0 +1,155 @@
+extends layout
+block header
+block content
+
+	center
+
+	div(width="300")
+
+		div(class="container") 
+
+			include header 
+
+			table(align="center" style='width:800px;')
+
+				th(align="left") 
+					font(size="6" class='changeColor') v1.0 API  - Documentation				
+				tr
+					td(class='panel' )
+						div(class='exchange')
+							h3 Overview
+							p. 
+								Cannapay provides a simple and powerful REST API to allow you to programatically perform nearly all actions you can from our web interface. All requests use the application/json content type and go over https. The base url is https://cannapay.com/api/{version}/. We use a combination of GET & POST requests and all responses come in a default response object with the result in the result field. Always check the success flag to ensure that your API call succeeded (true/false).
+								We are currently restricting orders to 500 open orders and 200,000 orders a day. We reserve the right to change these settings as we tune the system. If you are affected by these limits as an active trader, please email support@cannapay.com.
+								If you have any questions, feedback or recommendation for API support you can post a question in our support center.
+						br
+						div(class='exchange')
+							h3 Authentication
+							p For version 1.0 of the Cannapay API, we use a standard HMAC-SHA512 signed request. Append apikey and nonce to your request and calculate the HMAC hash and include it under an apisign HTTP header. Note: the nonce must always be greater than your previous request.
+							p http://76.121.19.166:3000/api/v1
+						br
+						div(class='exchange')
+							h3 trade/buylimit
+							h4 [GET REQUEST]
+							p Required Parameters:
+							ul
+								li
+									span exchange (eg. Bittrex or Swisscex)
+								li  
+									span enabled (eg. True or False)
+								li
+									span rate (eg. 0.00002500)
+								li
+									span market (eg. BTC-CCN, BTC-DOGE)
+								li
+									span quantity (eg. 10,000)
+						br
+						div(class='exchange')
+							h3 trade/selllimit
+							h4 [GET REQUEST]
+							p Required Parameters:
+							ul
+								li
+									span exchange (eg. Bittrex or Swisscex)
+								li  
+									span enabled (eg. True or False)
+								li
+									span rate (eg. 0.00002500)
+								li
+									span market (eg. CCN, BTC)
+								li
+									span quantity (eg. 10,000)
+						br
+						div(class='exchange')
+							h3 trade/buyladder
+							h4 [GET REQUEST]
+							p Required Parameters:
+							ul
+								li
+									span exchange (eg. Bittrex or Swisscex)
+								li  
+									span market (eg. BTC-CCN, BTC-DOGE)
+								li
+									span startPoint (eg. 0.00001000)
+								li
+									span endPoint (eg. 0.00002500)
+								li
+									span spread (eg. 0.00000025)
+								li
+									span quantity (eg. 10,000)
+						br
+						div(class='exchange')
+							h3 trade/sellladder
+							h4 [GET REQUEST]
+							p Required Parameters:
+							ul
+								li
+									span exchange (eg. Bittrex or Swisscex)
+								li  
+									span market (eg. BTC-CCN, BTC-DOGE)
+								li
+									span startPoint (eg. 0.00001000)
+								li
+									span endPoint (eg. 0.00002500)
+								li
+									span spread (eg. 0.00000025)
+								li
+									span quantity (eg. 10,000)
+						br
+						div(class='exchange')
+							h3 trade/history
+							h4 [GET REQUEST]
+						br
+						div(class='exchange')
+							h3 trade/cancel
+							h4 [GET REQUEST]
+							p Required Parameters: 
+							ul
+								li
+									span Exchange (eg. Bittrex or Swisscex)
+								li  
+									span UUID (eg. 682d80e6-2443-454b-acd2-49ee7c3e0b54)
+						br
+						div(class='exchange')
+							h3 trade/cancelladder
+							h4 [GET REQUEST]
+							p Required Parameters: 
+							ul
+								li
+									span exchange (eg. Bittrex or Swisscex)
+								li  
+									span id (eg. 5419fffd5dc186dd7b63f434)
+						br
+						div(class='exchange')
+							h3 invoices
+							h4 [GET REQUEST]
+							p Required Parameters: 
+							ul
+								li
+									span apikey
+						br
+						div(class='exchange')
+							h3 invoice/create
+							h4 [GET REQUEST]
+							p Required Parameters: 
+							ul
+								li
+									span apikey
+						br
+						div(class='exchange')
+							h3 invoice/modify
+							h4 [GET REQUEST]
+							p Required Parameters: 
+							ul
+								li
+									span apikey
+						br
+						div(class='exchange')
+							h3 invoice/delete
+							h4 [GET REQUEST]
+							p Required Parameters: 
+							ul
+								li
+									span apikey
+								
+		include footer.jade	

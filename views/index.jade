@@ -1,0 +1,144 @@
+extends layout
+block header
+    
+block content
+    
+    div(class="container" style="height: 100%;")
+        
+        include header 
+
+        h2(style='font-size: 12px; margin-bottom:10px;' align="right" id='hello') Welcome back #{user.local.email}!   
+        script.
+        - if(user.local.failedAttempts > 0){
+        -    var attempts = '[x] There has been '+user.local.failedAttempts+' failed attempt(s) since your last login.';   
+        - }
+
+        div(align="right" width="300px")
+            a(onclick="resetAttempts()" alt="click to reset" href="javascript:void(0);" id="message" class='message') #{attempts}
+        
+        table
+            tr
+                td(style='vertical-align: top')
+                    table
+                        tr
+                            td(style='vertical-align:top; width: 200px')
+                               
+                                #txhistory
+                                    table
+
+                                #news
+                                    div(class='panel' style='padding-top: 1px; padding-left: 15px; border:1px solid #454545;')
+                                        div(style='padding-left: 5px; background:rgba(80,210,186,.4);')
+                                            h2 News: 10/15
+                                        p - Beta registrations are now closed!
+                                        div(style='padding-left: 5px; background:rgba(80,210,186,.4);')
+                                            h2 News: 10/2
+                                        p - Swisscex withdraws enabled (requires email verification)
+                                        p - Swisscex compatable orderbooks enabled
+                                        p - Swisscex buy/sell enabled (unable to cancel orders yet, coming in the next 24/48hr...)
+                                        p - New invoice page!
+                                        p - UI Tweaks to tabs (fadein/out), new animated background.
+                                       
+                                        b   Coming soon:
+                                        p - Full swisscex functionality
+                                        p - Password reset form/email (completed, will be enabled in next 24-48hr)
+                td(style='vertical-align: top')
+                    
+                    table
+
+                        tr
+                            td(style='width: 700px; vertical-align: top;')
+                                
+                                // Exchange Tabs
+                                ul(class='tabs')
+                                    li 
+                                        a(href="#tab1", class="tab") Bittrex
+                                    li 
+                                        a(href="#tab2", class="tab") Swissex
+                                    
+                                    #tab1
+                                        div(class='exchange')
+                                            // EXCHANGE INFO
+                                            h2 Bittrex Deposit Addresses
+                                            #exchangeBittrex(class='table')
+                                                table(style='width: 100%')
+                                                    thead
+                                                        th Currency
+                                                        th Balance
+                                                        th Pending
+                                                        th Address
+                                                        th Withdraw
+                                                    tbody
+
+                                    #tab2
+                                        div(class='exchange')
+                                            h2 Swisscex Deposit Addresses 
+                                            #exchangeSwisscex(class='table')
+                                                table(style='width: 100%')
+                                                    thead
+                                                        th Currency
+                                                        th Balance
+                                                        th Pending
+                                                        th Address
+                                                        th Withdraw
+                                                    tbody
+                       
+                                #walletInfo(class='table exchange')
+                                    h2 Wallet Balances
+                                    table(style='width: 100%')
+                                        thead
+                                            th Address Label
+                                            th Balance
+                                            th Send
+                                            th Show Addresses
+                                        tbody
+
+                                
+                                #txInfo(class='table exchange')
+                                    h2 Transactions
+                                    table(style='width: 100%')
+                                        thead
+                                            th Address
+                                            th Amount
+                                            th Fee
+                                            th confirmations
+                                            th txid
+                                            th time
+                                        tbody
+                                
+                                // Inline Bittrex Withdraw Form (HIDDEN)
+                                div(style='display : none;')
+                                    div(style='width:400px; height:150px;')#bittrexWithdrawForm
+                                        center
+                                            p(style="color:#222222;") Available Balance: 
+                                            form(action='/user/bittrex/withdraw', method='POST')
+                                                input(type="text", name="withdrawaddress" class="withdraw", placeholder="", id="email")
+                                                input(type="text", name="amount" class="withdraw", placeholder="Amount", id="coin")
+                                                a(class="btn" title="test" onclick="test()" href="javascript:void(0);") Withdraw
+                                
+                                // Inline Swisscex Withdraw Form (HIDDEN)
+                                div(style='display : none;')
+                                    div(style='width:400px; height:150px;')#swisscexWithdrawForm
+                                        center
+                                            p(style="color:#222222;") Available Balance: 
+                                            form(action='/user/swisscex/withdraw', method='POST')
+                                                input(type="text", name="withdrawaddress" class="withdraw", placeholder="Address", id="email")
+                                                input(type="text", name="amount" class="withdraw", placeholder="Amount", id="coin")
+                                                input(type="hidden", name="currency", value="#{}")
+                                                a(class="btn" title="test" onclick="test()" href="javascript:void(0);") Withdraw
+                                
+                                // Inline CCN Withdraw form (HIDDEN)
+                                div(style='display : none;')
+                                    div(style='width:400px; height:150px;')#walletWithdrawForm
+                                        center
+                                            p(style="color:#222222;") Available Balance: 
+                                            form(action='/user/withdraw', method='POST')
+                                                input(type="text", name="withdrawaddress" class="withdraw", placeholder="Address", id="email")
+                                                input(type="text", name="amount" class="withdraw", placeholder="Amount", id="coin")
+                                                input(class='button-green', type='submit', value='Send')
+                                
+                                // Inline CCN Address List (HIDDEN)
+                                div(style='display : none;')
+                                    div(style='width:400px; height:150px;')#addressList
+                                        center
+                                            p(style="color:#222222;") Available Balance:

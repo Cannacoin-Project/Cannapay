@@ -1,0 +1,28 @@
+block content
+	link(rel='stylesheet', href='/stylesheets/style.css', class='template')
+	link(rel='stylesheet', href='/stylesheets/vendor/animate.css')
+	center
+		div(width="300")
+		div(class="container" style="height: 100%;") 
+			center
+				div(class='exchange' style='width: 400px; height: 230px; border-radius: 12.5px;')
+					table(align="center")
+						th(align="") 				
+							h2 SIGN-UP
+							h3 Beta Registrations are now closed!
+							p(class='error')= message
+						tr
+							td(class='panel' style="width:300px; border-radius: 12.5px")
+								form(action='/signup', method='POST')
+									input(type="text", name="email" class="form", placeholder="Email", id="email" autofocus)
+									br
+									input(type="Password", name="password" class="form", placeholder="Password", id="protected")
+									br
+									input(type="Password", name="passwordConfirm" class="form", placeholder="Confirm Password", id="protected")
+									br
+									input(class='button-login', type='submit', value='Sign-Up!')
+						tr
+							td(align="center")
+								a(href="/login") Already a member? Login!
+
+		include footer.jade

@@ -1,0 +1,43 @@
+extends layout
+block header
+
+block content
+	center
+	div(width="300")
+		div(class="container") 
+			include header 
+			table(align="center")
+				th(align="left") 	
+					font(size="6" class='changeColor') Trade History			
+				tr
+					td(class='panel' style='width:800px;')
+			center
+				#tradeInfo(class='table')
+					table(style='width:800px;')
+						thead
+							th Exchange
+							th Market
+							th Trade Type
+							th Rate
+							th Quantity
+							th Timestamp
+							th Completed
+						tbody
+
+			table(align="center")
+				th(align="left") 	
+					font(size="6" class='changeColor') Padding History			
+				tr
+					td(class='panel' style='width:800px;')
+			center
+				#historyTradeInfo(class='table')
+					table(style='width:800px;')
+						thead
+							th Exchange
+							th Market
+							th Trade Type
+							th Rate
+							th Quantity
+							th Timestamp
+							th Completed
+						tbody

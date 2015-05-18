@@ -1,0 +1,4 @@
+/* aside */
+aside { float: left; max-width: 220px; background-color: #fff}
+.inside { background-color: #f4f4f4; padding: 10px; }
+#sidebar.sticky { float: none; position: fixed; top: 20px; z-index: 6; left: auto; }

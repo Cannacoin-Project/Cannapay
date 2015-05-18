@@ -1,0 +1,11 @@
+var preloader = $('.shaft-load8');
+$('<div>').appendTo(preloader).addClass('shaft1');
+$('<div>').appendTo(preloader).addClass('shaft2');
+$('<div>').appendTo(preloader).addClass('shaft3');
+$('<div>').appendTo(preloader).addClass('shaft4');
+$('<div>').appendTo(preloader).addClass('shaft5');
+$('<div>').appendTo(preloader).addClass('shaft6');
+$('<div>').appendTo(preloader).addClass('shaft7');
+$('<div>').appendTo(preloader).addClass('shaft8');
+$('<div>').appendTo(preloader).addClass('shaft9');
+$('<div>').appendTo(preloader).addClass('shaft10');

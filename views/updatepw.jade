@@ -1,0 +1,32 @@
+block content
+	link(rel='stylesheet', href='/stylesheets/style.css', class='template')
+	link(rel='stylesheet', href='/stylesheets/vendor/animate.css')
+	link(rel='stylesheet', href='/stylesheets/vendor/alertify.core.css')
+	link(rel='stylesheet', href='/stylesheets/vendor/alertify.default.css')
+	link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
+	//Pre-load important JS libraries required to use Cannapay.
+	script(src='/javascripts/vendor/jquery.min.js')
+	script(src='/javascripts/vendor/socket.io-1.0.6.js')
+
+	center
+		div(width="300")
+		div(class="container" style="height: 100%;") 
+			center
+				div(class='exchange' style='width: 400px; height: 225px;')
+					table(align="center" id='updatepwform')
+						th(align="")
+							h2 UPDATE PASSWORD
+							p(class='error')= message
+						tr
+							td(class='panel' style="width:300px; border-radius: 12.5px")
+								input(type="text", name="email" class="form", placeholder="Email", id="email"  value='#{email}' disabled)
+								input(type="Password", name="newPassword" class="form", placeholder="New Password" id='newPassword' autofocus)
+								input(type="Password", name="newPasswordConfirm" class="form", id='newPasswordConfirm' placeholder="Confirm New Password")
+								input(type="text", name="google2fa" class="form", id='google2fa' placeholder="Google 2FA Password")
+								input(type="hidden", name="hash" class="form", placeholder="hash", id="hash" value='#{hash}')
+								br
+								input(class='button-login', type='submit', value='Reset Password' id='submitnewpass')
+
+	script(src='/javascripts/ui/resetpw.js')
+	script(src='/javascripts/vendor/alertify.min.js')
+include footer.jade

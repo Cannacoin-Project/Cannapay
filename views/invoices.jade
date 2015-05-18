@@ -1,0 +1,24 @@
+extends layout
+block header
+
+block content
+	center
+	div(class="container" style="height: 800px;") 
+		include header 
+		table(align="center")
+			th(align="left") 	
+				font(size="6" class='changeColor') Invoice History			
+			tr
+				td(class='panel' style='width:800px;')
+		center
+			#invoiceTable(class='table')
+				table(style='width:800px;')
+					thead
+						th ID
+						th Customer
+						th Priority
+						th Amount
+						th Confirmed
+						th Order Details
+						th Print
+					tbody

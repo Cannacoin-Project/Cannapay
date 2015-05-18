@@ -1,0 +1,381 @@
+extends layout
+block header
+
+block content		
+	center
+	div(class="container" width='80%' style="height: 100%;") 
+		
+		include header
+
+		font(size="6" class='changeColor') Trade
+		//DEFAULT MARKETS
+		script.
+		-	var viewMarkets = ['BTC-POT', 'BTC-THC', 'BTC-MARYJ', 'BTC-DOPE', 'BTC-SLR', 'BTC-BC', 'BTC-DOGE', 'BTC-LTC', 'BTC-CXC', 'BTC-DRK', 'BTC-CSD'];
+
+		table(align="center" width='90%')
+
+			table(align="center" width='75%')
+				tr
+					td(align='left')
+							//h3 Market: 
+							form
+								div(class="styled-select")
+									select(id='viewMarket' style='width: 220px')
+										option(value='Bittrex' selected="selected") BTC-CCN
+											each viewMarket in viewMarkets
+												option(value=''+viewMarket+'' name='viewMarket') #{viewMarket}
+				tr
+					
+					td(align='center')
+						// Exchange Tabs
+						center
+							ul(class='tabs' align='left')
+								li: a(href="#1depthChartTab", class="tab") Depth Chart
+								li: a(href="#2marketHistoryTab", class="tab") Market History
+								center
+									#1depthChartTab
+										div(class='exchange')
+											div(id="chart" style="width:100; height:300px;")
+									#2marketHistoryTab
+										div(class='exchange')
+											div(id="marketHistoryChart" style="width:100; height:300px;")
+				th(align="center") 
+				// h3 Limit Buy
+			th(align="center") 
+				// h3 Sell Order		
+			tr
+				td(class='panel' id="sellLimit")
+				td(class='panel')
+		center
+			div(style='width:75%;')
+				
+				h2(align='left' id='hideBittrexBalance' style='cursor: pointer; cursor: hand;') Bittrex Balance + / -
+				#tradeBittrexBalance(class='table')
+					table(style='width:100%; margin-bottom: 20px')
+						thead
+							th Currency
+							th Balance
+							th Pending
+							th Address
+							th Withdraw
+						tbody
+				h2(align='left' id='hideBittrexOrderInfo' style='cursor: pointer; cursor: hand;') Open Orders + / -
+				#tradeOrderInfo(class='table')
+					table(style='width:100%; margin-bottom: 20px')
+						thead
+							th Market
+							th Type
+							th Limit
+							th Quantity
+							th Timestamp
+							th Cancel
+						tbody
+				
+				h2(align='left' id='hideBittrexLadderInfo' style='cursor: pointer; cursor: hand;') Open Ladders + / -
+				#tradeLadderInfo(class='table')
+					table(style='width:100%; margin-bottom: 20px')
+						thead
+							th Market
+							th Type
+							th Start
+							th Stop
+							th Spread
+							th Quantity
+							th Cancel
+						tbody
+		
+		table(align="center" width='75%')
+			tr
+				td(align='center')
+					// Exchange Tabs
+					center
+						ul(class='tabs' align='left')
+							li: a(href="#tab1", class="tab") Bittrex
+							li: a(href="#tab2", class="tab") Swissex
+							center
+								#tab1
+									div(class='exchange')
+										table
+											th
+												h2 Buy Padding
+											th
+											th
+												h2 Sell Padding
+											tr
+												td
+													table(width='100%' style='background:rgba(101,179,84,.1);' cellpadding='1px')
+														form
+														tr
+															td
+																| Start Price:
+															td(align='center')
+																input(type='hidden' name='bittrexBuyLadderExchange' id='bittrexBuyLadderExchange' value='bittrex')
+																input(type='hidden' name='bittrexBuyLadderMarket' id='bittrexBuyLadderMarket' value='#{market}')
+																input(type='text' name='bittrexBuyLadderStart' id='bittrexBuyLadderStart' value='0.00000000' placeholder='ex. 0.00001000' size='25')
+														tr
+															td
+																| Stop Price:
+															td(align='center')
+																input(type='text' name='bittrexBuyLadderStop' id='bittrexBuyLadderStop' value='0.00000000' placeholder='ex. 0.00002500' size='25')
+														tr
+															td
+																| Satoshi Spread:
+															td(align='center')
+																input(type='text' name='bittrexBuyLadderSpread' id='bittrexBuyLadderSpread' placeholder='ex. 25 (Satoshi)' size='25')
+														tr
+															td
+																| Total Buy Quantity:
+															td(align='center')
+																input(type='text' name='bittrexBuyLadderQuantity' id='bittrexBuyLadderQuantity' placeholder='ex. 1000' size='25')
+														
+													div(id='buyLadderCalc' cellpadding='4px' style='color: #d1d1d1; padding-bottom: 3px;')
+													a(class='btn-green' onclick='bittrexBuyLadder()' href='javascript:void(0);') Execute Buy Padding	
+												td
+												td
+													table(width='100%' style='background:rgba(228,66,41,.1);'  cellpadding='1px')
+														form
+														tr
+															td
+																| Start Price:
+															td(align='center')
+																input(type='hidden' name='bittrexSellLadderExchange' id='bittrexSellLadderExchange' value='bittrex')
+																input(type='hidden' name='bittrexSellLadderMarket' id='bittrexSellLadderMarket' value='#{market}')
+																input(type='text' name='bittrexSellLadderStart' id='bittrexSellLadderStart' value='0.00000000' size='25')
+														tr
+															td
+																| Stop Price:
+															td(align='center')
+																input(type='text' name='bittrexSellLadderStop' id='bittrexSellLadderStop' value='0.00000000' size='25')
+														tr
+															td
+																| Satoshi Spread:
+															td(align='center')
+																input(type='text' name='bittrexSellLadderSpread' id='bittrexSellLadderSpread' placeholder='ex. 25 (Satoshi)' size='25')
+														tr
+															td
+																| Total Sell Quantity:
+															td(align='center')
+																input(type='text' name='bittrexSellLadderQuantity' id='bittrexSellLadderQuantity' placeholder='ex. 1000' size='25')
+														
+													div(id='sellLadderCalc' style='color: #d1d1d1; padding-bottom: 3px;')
+													a(class='btn-red' onclick='bittrexSellLadder()' href='javascript:void(0);') Execute Sell Padding
+										table
+											th
+												h2 Buy Order Book
+											th
+											th
+												h2 Sell Order Book
+											tr
+												td
+													center
+														table(width='100%' style="background:rgba(101,179,84,.1);" cellpadding='2px')
+															form(id='buyLimit')
+															tr
+																td
+																	| Buy Rate: 
+																td
+																	input(type='hidden' name='buyLimitExchange' value='bittrex')
+																	input(type='hidden' name='buyLimitMarket' value='#{market}')
+																	input(type='hidden' name='buyLimitType' value='target')
+																	input(type='hidden' name='buyLimitEnabled' value='true')
+																	input(type='text' name='buyLimitRate' value='0.00000000' placeholder='Rate (ex. 0.00002500' size='25')
+															tr
+																td
+																	| Total Buy Quantity: 
+																td
+																	input(type='text' name='buyLimitQuantity' placeholder='Quantity' size='25')
+
+														div(id='buyLimitExchangeCalc' style='color: #d1d1d1; padding-bottom: 3px;')
+														a(class='btn-green' onclick='buyLimit()' href='javascript:void(0);') Buy	
+												td
+												td
+													center
+														table(width='100%' style="background:rgba(228,66,41,.1);"  cellpadding='2px')
+															form(id='sellLimit')
+															tr
+																td
+																	| Sell Rate: 
+																td
+																	input(type='hidden' name='sellLimitExchange' value='bittrex')
+																	input(type='hidden' name='sellLimitMarket' value='#{market}')
+																	input(type='hidden' name='sellLimitType' value='target')
+																	input(type='hidden' name='sellLimitEnabled' value='true')
+																	input(type='text' name='sellLimitRate' value='0.00000000' placeholder='Rate (ex. 0.00002500' size='25')
+															tr
+																td
+																	| Total Sell Quantity: 
+																td
+																	input(type='text' name='sellLimitQuantity' placeholder='Quantity' size='25')
+														
+															
+															
+															
+														div(id='sellLimitExchangeCalc' style='color: #d1d1d1; padding-bottom: 3px;' align='left')
+														a(class='btn-red' onclick='sellLimit()' href='javascript:void(0);') Sell	
+											tr
+												td(valign='top')
+													#bittrexOrderBookBuy(class='table')
+														table(align='center')
+															thead
+																th Total (BTC)
+																th Quantity
+																th Bid
+															tbody(id='bittrexOrderBookBuy1')
+												td(width='10px')
+												td(valign='top')
+													#bittrexOrderBookSell(class='table')
+														table(align='center')
+															thead
+																th Ask
+																th Quntity
+																th Total (BTC)
+															tbody
+								#tab2
+									div(class='exchange')
+										table
+											th
+												h2 Buy Padding
+											th
+											th
+												h2 Sell Padding
+											tr
+												td
+													table(width='100%' style='background:rgba(101,179,84,.1);' cellpadding='1px')
+														form
+														tr
+															td
+																| Start Price:
+															td(align='center')
+																input(type='hidden' name='swisscexBuyLadderExchange' id='swisscexBuyLadderExchange' value='swisscex')
+																input(type='hidden' name='swisscexBuyLadderMarket' id='swisscexBuyLadderMarket' value='#{market}')
+																input(type='text' name='swisscexBuyLadderStart' id='swisscexBuyLadderStart' value='0.00000000' placeholder='ex. 0.00001000' size='25')
+														tr
+															td
+																| Stop Price:
+															td(align='center')
+																input(type='text' name='swisscexBuyLadderStop' id='swisscexBuyLadderStop' value='0.00000000' placeholder='ex. 0.00002500' size='25')
+														tr
+															td
+																| Satoshi Spread:
+															td(align='center')
+																input(type='text' name='swisscexBuyLadderSpread' id='swisscexBuyLadderSpread' placeholder='ex. 25 (Satoshi)' size='25')
+														tr
+															td
+																| Total Buy Quantity:
+															td(align='center')
+																input(type='text' name='swisscexBuyLadderQuantity' id='swisscexBuyLadderQuantity' placeholder='ex. 1000' size='25')
+														
+													div(id='buyLadderCalc' cellpadding='4px' style='color: #d1d1d1; padding-bottom: 3px;')
+													a(class='btn-green' onclick='swisscexBuyLadder()' href='javascript:void(0);') Execute Buy Padding	
+												td
+												td
+													table(width='100%' style='background:rgba(228,66,41,.1);'  cellpadding='1px')
+														form
+														tr
+															td
+																| Start Price:
+															td(align='center')
+																input(type='hidden' name='swisscexSellLadderExchange' id='swisscexSellLadderExchange' value='swisscex')
+																input(type='hidden' name='swisscexSellLadderMarket' id='swisscexSellLadderMarket' value='#{market}')
+																input(type='text' name='swisscexSellLadderStart' id='swisscexSellLadderStart' value='0.00000000' size='25')
+														tr
+															td
+																| Stop Price:
+															td(align='center')
+																input(type='text' name='swisscexSellLadderStop' id='swisscexSellLadderStop' value='0.00000000' size='25')
+														tr
+															td
+																| Satoshi Spread:
+															td(align='center')
+																input(type='text' name='swisscexSellLadderSpread' id='swisscexSellLadderSpread' placeholder='ex. 25 (Satoshi)' size='25')
+														tr
+															td
+																| Total Sell Quantity:
+															td(align='center')
+																input(type='text' name='swisscexSellLadderQuantity' id='swisscexSellLadderQuantity' placeholder='ex. 1000' size='25')
+														
+													div(id='sellLadderCalc' style='color: #d1d1d1; padding-bottom: 3px;')
+													a(class='btn-red' onclick='swisscexSellLadder()' href='javascript:void(0);') Execute Sell Padding
+										table
+											th
+												h2 Buy Order Book
+											th
+											th
+												h2 Sell Order Book
+											tr
+												td
+													center
+														table(width='100%' style="background:rgba(101,179,84,.1);" cellpadding='2px')
+															form(id='buyLimit')
+															tr
+																td
+																	| Buy Rate: 
+																td
+																	input(type='hidden' name='buyExchange' id='swisscex' value='swisscex')
+																	input(type='hidden' name='buyMarket' id='swisscex' value='#{market}')
+																	input(type='hidden' name='buyType' id='swisscex' value='target')
+																	input(type='hidden' name='buyEnabled' id='swisscex' value='true')
+																	input(type='text' name='buyRate' id='swisscex' value='0.00000000' placeholder='Rate (ex. 0.00002500' size='25')
+															tr
+																td
+																	| Total Buy Quantity: 
+																td
+																	input(type='text' name='buyQuantity' placeholder='Quantity' id='swisscex' size='25')
+
+														div(id='buyExchangeCalc' style='color: #d1d1d1; padding-bottom: 3px;')
+														a(class='btn-green' onclick='swisscexBuy()' href='javascript:void(0);' id='swisscex') Buy	
+												td
+												td
+													center
+														table(width='100%' style="background:rgba(228,66,41,.1);"  cellpadding='2px')
+															form(id='sellLimit')
+															tr
+																td
+																	| Sell Rate: 
+																td
+																	input(type='hidden' name='sellExchange' id='swisscex' value='swisscex')
+																	input(type='hidden' name='sellMarket' id='swisscex' value='#{market}')
+																	input(type='hidden' name='sellType' id='swisscex' value='target')
+																	input(type='hidden' name='sellEnabled' id='swisscex' value='true')
+																	input(type='text' name='sellRate' id='swisscex' value='0.00000000' placeholder='Rate (ex. 0.00002500' size='25')
+															tr
+																td
+																	| Total Sell Quantity: 
+																td
+																	input(type='text' name='sellQuantity' id='swisscex' placeholder='Quantity' size='25')
+														
+															
+															
+															
+														div(id='sellExchangeCalc' style='color: #d1d1d1; padding-bottom: 3px;' align='left')
+														a(class='btn-red' onclick='swisscexSell()' href='javascript:void(0);' id='swisscex' ) Sell	
+											tr
+												td(valign='top')
+													#swisscexOrderBookBuy(class='table')
+														table(align='center')
+															thead
+																th Total (BTC)
+																th Quantity
+																th Bid
+															tbody(id='swisscexOrderBookBuy1')
+												td(width='10px')
+												td(valign='top')
+													#swisscexOrderBookSell(class='table')
+														table(align='center')
+															thead
+																th Ask
+																th Quntity
+																th Total (BTC)
+															tbody
+	// Inline Bittrex Withdraw Form (HIDDEN)
+	div(style='display : none;')
+		div(style='width:400px; height:150px;')#bittrexWithdrawForm
+			center
+				p(style="color:#222222;") Available Balance: 
+				form(action='/user/bittrex/withdraw', method='POST')
+					input(type="text", name="withdrawaddress" class="withdraw", placeholder="", id="email")
+					input(type="text", name="amount" class="withdraw", placeholder="Amount", id="coin")
+					a(class="btn" title="test" onclick="test()" href="javascript:void(0);") Withdraw
+																					
+	script(src='/javascripts/tradefunctions.js')
+

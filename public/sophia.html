@@ -1,0 +1,296 @@
+<!-- meant to be used as a future implementation of speech actions & alerts for cannapay -->
+<html>
+	<head>
+	<title>Chatbox</title>
+			<style>
+				*{
+				    font-family: verdana;
+				}
+				body{
+				    background: url(http://subtlepatterns.com/patterns/confectionary.png);
+				    padding: 50px;
+				}
+				h2{
+				    color: #646464;
+				    font-size: 15px;
+				}
+				button{
+				    width: 150px;
+				    height: 50px;
+				    background: #555555;
+				    color: #fff;
+				    text-align: center;
+				    border: 0;
+				    border-top-right-radius: 1em;
+				    border-top-left-radius: 1em;
+				}
+				button:hover{
+				    background: #4C4C4C;
+				}
+				button:active{
+				    background: #818181;
+				    border: #222222;
+				}
+				video {
+					border-radius: 1em;
+					padding: 5px;
+				}
+				#cameras{
+					background: #d1d1d1;
+					padding: 10px;
+					border-top-right-radius: 1em;
+				}
+				.chat-container{
+					background: #d1d1d1;
+					border-bottom-right-radius: 1em;
+				    border-bottom-left-radius: 1em;
+				    padding: 15px;
+				}
+				#chat{
+			   		background: #fff;
+			   		border-radius: 1em;
+				    padding: 15px;
+				    height: 200px;
+				    overflow-y: scroll;
+				}
+				.msg{
+				    color: #222222;
+				    font-family: verdana;
+				    font-size: 12px;
+				}
+				.commands{
+					background: #d1d1d1;
+					padding: 15px;
+				}
+				.commands > li {
+					list-style: none;
+					font-weight: 600;
+					background-color: #646464;
+					padding: 3px;
+					color: #fff;
+				}
+				.commands > span {
+				}
+			</style>
+	</head>
+	<body>
+		<h2>Sophia, a custom speech activated bot by SubCreative.</h6>
+			<i>Web Real Time Communication with video and audio coming soon!</i>
+		<ul class="commands">
+			<p>Voice Commands:</p>
+			<li>Sophia: </li>
+			<span>You can always start a command by simply calling out for your new companion.</span>
+			<li>Admin: </li>
+			<span>If you're logged in as an admin you can access your admin commands via the "admin" command.</span>
+			<li>Goto: </li>
+			<span>Redirect your browser to a new URL. (note: <i>broken, too late to fix but actually I need to come up with a better system to manage commands</i>)</span>
+			<li>Open Video: </li>
+			<span>Open your video camera.</span>
+		</ul>
+
+		</div>
+
+		<div>
+			<button id="mic">Talk</button>
+			<button id="start-video">Video</button>
+		</div>
+		<div id="cameras"></div>
+		<div class="chat-container">
+			<div id="chat"></div>
+		</div>
+		
+		<script>
+			window.date = new Date();
+			window.debug = true;
+			var debug = window.debug;
+
+			//Event Listerners
+			document.getElementById("start-video").addEventListener("click", function(){
+			    createVideo('cameras');
+			});
+			document.getElementById("mic").addEventListener("click", function(){
+			    getSpeech('chat');
+			});
+
+
+			//Alerts
+			function voiceAlert(options) {
+				if (!options) {
+					debug && console.log("No speechAlert options configured, using default.");	
+					var options = {};
+					options.src = 'http://cannapay.io/audio/speech.wav';
+				}
+				var speechAlert = document.createElement('audio');
+        			speechAlert.src = options.src;
+        			speechAlert.preload = true;
+        			speechAlert.play();
+			}
+			function successAlert(options) {
+				if (!options) {
+					debug && console.log("No successAlert options configured, using default.");	
+					var options = {};
+					options.src = 'http://cannapay.io/audio/speechSuccess.wav';
+				}
+
+				//alert
+    			var alert = document.createElement('audio');
+    			alert.src = options.src;
+    			alert.preload = true;
+    			alert.play();
+			}
+			function failureAlert(options) {
+				if (!options) {
+					debug && console.log("No failureAlert options configured, using default.");	
+					var options = {};
+					options.src = 'http://cannapay.io/audio/speechFailure.wav';
+				}
+
+				//alert
+    			var alert = document.createElement('audio');
+    			alert.src = options.src;
+    			alert.preload = true;
+    			alert.play();
+			}
+
+
+			//Video Functions
+			function createVideo(id){
+				var cameras = document.getElementById(id);
+				var userVideo = document.createElement('video');
+
+				navigator.getUserMedia = (
+					navigator.getUserMedia || 
+					navigator.webkitGetUserMedia || 
+					navigator.mozGetUserMedia || 
+					navigator.msGetUserMedia
+				);
+
+				if (navigator.getUserMedia) {
+					navigator.getUserMedia({
+						video: {
+						    mandatory: {
+						      maxWidth: 256,
+						      minFrameRate: 30
+						    },
+						    optional: [
+						      { minFrameRate: 60 }
+						    ]
+					  	},
+						audio:false
+					},        
+					function(stream) { 
+						var url = window.URL || window.webkitURL;
+						
+			            userVideo.src = url ? url.createObjectURL(stream) : stream;
+		            	cameras.appendChild(userVideo);
+			            userVideo.play();
+					},
+					function(error) { 
+						alert(JSON.stringify(error))
+					});
+				} else {
+					alert('Sorry, the browser you are using doesn\'t support getUserMedia');
+				}
+			}
+			//Chat Functions
+			function addChatMsg(msg) {
+				//Timestamp, ChatMessage & Chatbox
+			    var chat = document.getElementById('chat');
+			    var p = document.createElement('p');
+		        p.textContent = window.date.toDateString() + window.date.toLocaleTimeString() + ': ' + msg;
+
+				//Append our message (<P> tag) to the chat box
+		        chat.appendChild(p);
+			}
+			
+
+			//Speech Functions
+			function getSpeech(id) {
+				if(!window.name){
+					sophia('Please provide a name before continuing.')
+					var promptName = prompt('Please enter your name');
+					if (promptName != null) {
+						window.name = promptName;						
+					}
+					return
+				}	
+				if(!window.localStorage.getItem('lastVisit')){
+					window.localStorage.setItem('lastVisit', window.date.toDateString() + ' ' + window.date.toLocaleTimeString());	
+				}
+
+				voiceAlert();
+			    var voice = new webkitSpeechRecognition();
+			    voice.onresult = function(event) { 
+		        	//Apply the processed speech create a text content (textContent is native DOM api method)
+		        	var speechResults = event.results[0][0].transcript;
+		        	addChatMsg(speechResults);
+		        	processVoiceCommand(speechResults);
+			    }
+			    voice.start();
+			}
+			function processVoiceCommand(speech){
+				//Take our speech and split the sentences and words space character.
+				var speechArray = speech.split(" ");	
+				var command;
+
+				//Sanitize our array so all words are lowercased (for parsing duh!)
+				for (var i = 0; i < speechArray.length; i++) {
+			        speechArray[i] = speechArray[i].toLowerCase();
+				};
+
+				//Grab our command.
+		        command = speechArray[0];
+
+				if(speechArray[0] == 'open' && speechArray[1] == 'video'){
+					command = 'open video'
+				}
+				if(speechArray[0] == 'go' && speechArray[1] == 'to'){
+					command = 'go to'
+				}
+
+				//Create our switch controller... this is our logit.
+				switch (command){
+	        		case 'sophia': 
+	        			successAlert();
+	        			sophia('Hi ' + window.name + ', it\'s nice to see you too!');
+	        		break;
+	        		case 'admin': 
+	        			successAlert();
+	        			console.log('You said the magic word, admin ;-)')
+	        			var lastVisit = window.localStorage.getItem('lastVisit');
+	        			sophia('Hi ' + window.name + ' you last visited ' + lastVisit + ', it\'s nice to see you again.');
+	        			window.localStorage.setItem('lastVisit', window.date.toDateString() + window.date.toLocaleTimeString());	
+	        		break;
+	        		case 'go to':
+	        			window.location = 'http://' + speech[1];
+	        		break;
+	        		case 'open video':
+	        			createVideo('cameras');
+	        		break;
+	        		default: 
+	        			failureAlert();
+	        			//sophia('I\'m sorry ' + window.name + ' I didn\'t recognize that voice command');
+	        		break;
+
+
+	        	}
+			}
+			function sophia(response){
+				var sophia = new SpeechSynthesisUtterance(response);
+				// var voices = window.speechSynthesis.getVoices();
+				// sophia.voice = voices[6]; // Note: some voices don't support altering params
+				// sophia.voiceURI = 'native';
+				// sophia.volume = 1; // 0 to 1
+				// sophia.rate = 1; // 0.1 to 10
+				// sophia.pitch = 2; //0 to 2
+				// sophia.text = response;
+				// sophia.lang = 'en-US';
+				speechSynthesis.speak(sophia);	
+			}
+
+		</script>
+	</body>
+</html>
+
+
+

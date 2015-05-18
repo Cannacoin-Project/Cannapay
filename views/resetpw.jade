@@ -1,0 +1,41 @@
+block content
+	link(rel='stylesheet', href='/stylesheets/style.css', class='template')
+	link(rel='stylesheet', href='/stylesheets/vendor/animate.css')
+	link(rel='stylesheet', href='/stylesheets/vendor/alertify.core.css')
+	link(rel='stylesheet', href='/stylesheets/vendor/alertify.default.css')
+	link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
+	//Pre-load important JS libraries required to use Cannapay.
+	script(src='/javascripts/vendor/jquery.min.js')
+	script(src='/javascripts/vendor/socket.io-1.0.6.js')
+
+	center
+		div(width="300")
+		div(class="container" style="height: 100%;") 
+			center
+				div(class='exchange' style='width: 400px; height: 175px; border-radius: 12.5px;')
+					table(align="center" id='resetpwform')
+						th(align="")
+							h2 RESET PASSWORD
+							p(class='error')= message
+						tr
+							td(class='panel' style="width:300px; border-radius: 12.5px")
+								
+								input(type="text", name="email" class="form", placeholder="Email", id="email" autofocus)
+								br
+								input(class='button-login', type='submit', value='Reset Password' id='resetpw')
+								center
+									br
+									a(href="/login") Nevermind, get me outa here!
+
+					table(align="center" id='resetpwformcompleted' style='display:none')
+						th(align="")
+							h2 RESET SUCCESS!
+							p Please check your email to reset your password.
+							a(id='emailLink'): i(class='fa fa-share fa-5x')
+						tr
+							td(class='panel' style="width:300px; border-radius: 12.5px")
+								
+
+	script(src='/javascripts/ui/resetpw.js')
+	script(src='/javascripts/vendor/alertify.min.js')
+include footer.jade

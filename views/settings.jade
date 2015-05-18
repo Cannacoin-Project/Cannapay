@@ -1,0 +1,77 @@
+extends layout
+block content
+    div(class="container")
+        include header 
+        h2 Settings
+        ul(class='tabs')
+            li 
+                a(href="#settings", class="tab") User Settings
+            //li 
+                a(href="#tradeSettings", class="tab") Merchant Settings
+            
+            div(class='panel')    
+                #settings
+                    table
+                        thead
+                            th(align='center')  
+                                h2 Change Password                    
+                            th
+                            th(align='center')                                               
+                                h2 API Key:
+                            th(align='center')
+                            th(align='center')
+                                h2 Google Authenticator:
+                                
+                        tbody
+                                td(valign="top", align='center', width="250px")
+                                    #userSettings
+                                        form   
+                                td(width='25px')
+                                td(valign="top", align='center', width="250px")
+                                    #userSettingsApi
+                                        form(method="post", action="user/update")
+                                td(width='25px')
+                                td(valign="top", align='center', width="250px")
+                                    #userSettings2fa
+                                        form(method="post", action="user/update")            
+        h2 API & Security Settings
+        ul(class='tabs')
+            li 
+                a(href="#bittrex", class="tab") Bittrex
+            li 
+                a(href="#swisscex", class="tab") Swisscex
+            li 
+                a(href="#yubiKey", class="tab") fObfuscate
+            #bittrex
+                div(class='exchange')
+                        table
+                            thead
+                                th(align='center')  
+                                    h2 Bittrex API Keys                    
+                                    
+                            tbody
+                                    td(valign="top", align='center', width="250px")
+                                        #bittrexSettings
+                                            form              
+            #swisscex
+                div(class='exchange')
+                        table
+                            thead
+                                th(align='center')  
+                                    h2 Swisscex API Keys                  
+                                    
+                            tbody
+                                    td(valign="top", align='center', width="250px")
+                                        #swisscexSettings
+                                            form                       
+            #yubiKey
+                div(class='exchange')
+                        table
+                            thead
+                                th(align='center')  
+                                    h2 fObfuscate 2FA                  
+                                    
+                            tbody
+                                    td(valign="top", align='center', width="250px")
+                                        #yubiKeySettings
+                                            form 

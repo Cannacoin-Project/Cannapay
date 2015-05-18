@@ -1,0 +1,66 @@
+doctype html
+html
+    head
+        title= title
+
+        //Cannapay Stylesheets
+        link(rel='stylesheet', href='/stylesheets/style.css', class='template')
+        link(rel='stylesheet', href='/stylesheets/navbar.css')
+        link(rel='stylesheet', href='/stylesheets/preloader.css')
+
+        //Vendor Stylesheets
+        link(rel='stylesheet', src='/stylesheets/vendor/jquery.dataTables.css')
+        link(rel='stylesheet', src='/stylesheets/vendor/jquery-ui.css')
+        link(rel='stylesheet', href='/stylesheets/vendor/colorbox.css')
+        link(rel='stylesheet', href='/stylesheets/vendor/alertify.core.css')
+        link(rel='stylesheet', href='/stylesheets/vendor/alertify.default.css')
+        link(rel='stylesheet', href='/stylesheets/vendor/animate.css')
+        link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
+
+        //link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        //link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.min.css')
+
+        //Pre-load important JS libraries required to use Cannapay.
+        script(src='/javascripts/vendor/jquery.min.js')
+        script(src='/javascripts/vendor/socket.io-1.0.6.js')
+
+    body
+
+        block content
+        div(class="animation-container")
+            div(class="clouds")
+        div(id='screensaver')
+        div(id='screensaverLogo')
+        
+        
+        // Cannapay Libs
+        script(src='/javascripts/global.js')
+        script(src='/javascripts/scripts.js')
+        script(src='/javascripts/socket.js')
+        script(src='/javascripts/screensaver.js')
+
+        //Vendor Libraries
+        script(src='/javascripts/vendor/alertify.min.js')
+        script(src='/javascripts/vendor/screenfull.js')
+        script(src='/javascripts/vendor/highcharts.js')
+        script(src='/javascripts/vendor/highchartsdark.js') 
+        script(src='/javascripts/vendor/jquery.colorbox-min.js')
+        script(src='/javascripts/vendor/jquery.qrcode.min.js')
+        script(src='/javascripts/vendor/jquery.jqpagination.min.js')
+        script(src='/javascripts/vendor/jquery-ui.js')
+        script(src='/javascripts/vendor/jquery.dataTables.min.js')
+        script(src='/javascripts/vendor/jquery.zclip.js')
+        
+        //script(src='/javascripts/bootstrap.min.js')
+
+        // UI & jQuery functions            
+        script(src='/javascripts/ui/tabs.js')
+        script(src='/javascripts/ui/charts.js')
+        script(src='/javascripts/ui/wallet.js')
+        script(src='/javascripts/ui/exchange.js')
+        script(src='/javascripts/ui/footer.js')
+        script(src='/javascripts/ui/preloader.js')
+        script(src='/javascripts/ui/copy.js')
+        script(src='/javascripts/ui/fullscreen.js')
+        
+        include footer

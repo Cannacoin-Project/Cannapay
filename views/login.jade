@@ -1,0 +1,45 @@
+block content
+	html
+		head
+			
+			title CannaPay | Login
+
+			link(rel='stylesheet', href='/stylesheets/style.css', class='template')
+			link(rel='stylesheet', href='/stylesheets/vendor/animate.css')
+			link(rel='stylesheet', href='/stylesheets/vendor/alertify.core.css')
+			link(rel='stylesheet', href='/stylesheets/vendor/alertify.default.css')
+
+			script(src='/javascripts/vendor/socket.io-1.0.6.js')
+		div(class="container" style="height: 100%;")
+			center
+				div(class='exchange' style='width: 400px; height: 250x; border-radius: 12.5px;')
+					table(align="center")
+						th(align="")
+							img(src='/images/cannapay.png')
+							h3 Beta Registrations are now closed!
+							p(class='animated flash error')= message
+						tr
+							td(class='panel' style='width:300px;')
+								form(action='/login', method='POST')
+									input(type="text", name="email" class="form", placeholder="Email", id="email" autofocus)
+									br
+									input(type="Password", name="password" class="form", placeholder="Password", id="protected")
+									br
+									input(type="Password", name="google2faCode" class="form", placeholder="2FA Code", id="key")
+									br
+									input(type="Password" name="yubiKeyOtp" class="form" placeholder="fObfuscate OTP" id="key")
+									br
+									input(class='button-login', type='submit', value='Log In')
+									br
+									br
+									table(align='center')
+										tr
+											td
+												a(href="/signup") Sign-up		
+											td
+												|	/
+											td
+												a(href="/resetpw") Reset Password
+		include footer.jade
+	script(src='/javascripts/vendor/alertify.min.js')
+	script(src='/javascripts/socket.js')
