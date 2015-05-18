@@ -1,3 +1,5 @@
+# THIS PROJECT IS STILL IN DEVELOPMENT / BETA - USE AT YOUR OWN RISK.
+
 Packages to consider:
 screenfull.js  -- Implemented
 pnotify.js
@@ -10,7 +12,7 @@ jQuery globalize.js
 For configuration please see process.env file.
 
 TODO:
--Implement bitcore libs, explorer and BIP32 implementation for key creation/storage.
+- Implement bitcore libs, explorer and BIP32 implementation for key creation/storage.
 - Investigate Meteor.js for it's reactivity, tight mongo integration and for mobile support via Cordova/Phonegap.
 - Investigate Mylar frame work (using meteor) for full server side encryption of data (keys etc.)
 - Finish API code for open sourcing (potentially start new process/repo for API)
